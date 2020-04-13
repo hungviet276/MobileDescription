@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MobileDescription</title>
+    <head>
+        <meta charset="utf-8">
+        <title>Xây dựng lớp điện thoại</title>
+    </head>
+
+<body>
+        <script>
+            let Mobile = function () {
+                this.battery = 100;
+                this.status = false;
+                this.inbox = [];
+                this.outbox = [];
+
+                this.checkStatus = function () {
+                    return this.status;
+                }
+                this.turnOn = function () {
+                    if (this.battery >0){
+                        this.status = true;
+                    }
+                }
+                this.turnOff = function () {
+                    this.status = false;
+                }
+                this.charge = function () {
+                    while (this.battery<100){
+                        this.battery++;
+                    }
+                }
+                this.checkBattery = function () {
+                    return this.battery;
+                }
+                this.useBattery = function () {
+                    if (this.battery>0){this.battery--;}
+                }
+                this.writeMessage = function (message) {
+                    if (this.status){this.message = message;
+                        this.useBattery();
+                    }
+                }
+                this.sendMessage = function (mobile) {
+                    if (this.status){
+                        mobile.inbox.push(this.message);
+                        this.outbox.push(this.message);
+                        this.useBattery();
+                    }
+                }
+                this.readInbox = function () {
+                    if (this.status){
+                    alert(this.inbox);
+                    this.useBattery()
+                    }
+                }
+                this.readOutbox = function () {
+                    if (this.status) {
+                    alert(this.outbox);
+                    this.useBattery();
+                    }
+                }
+
+            }
+            let nokia = new Mobile();
+            let iphone = new Mobile();
+            nokia.turnOn();
+            iphone.turnOn();
+            nokia.writeMessage("hello iphone");
+            nokia.sendMessage(iphone);
+            nokia.writeMessage("are u oke?");
+            nokia.sendMessage(iphone);
+            iphone.readInbox();
+            nokia.readOutbox();
+
+            alert(nokia.checkBattery());
+
+
+
+        </script>
+
+</body>
+
+</html>
